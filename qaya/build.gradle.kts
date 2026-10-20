@@ -10,10 +10,12 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    // Add lightweight HTTP server
+
     testImplementation("junit:junit:4.13.2")
     testImplementation(kotlin("test"))
 }
 
 application {
-    mainClass.set("com.adreesumer.qaya.MainKt")
+    mainClass.set("com.adreesumer.qaya.WebServerKt")
 }
