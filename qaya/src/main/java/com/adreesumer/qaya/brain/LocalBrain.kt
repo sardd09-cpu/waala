@@ -23,11 +23,13 @@ class LocalBrain(private val memoryEngine: MemoryEngine) {
 
     fun analyzeRequest(userInput: String): BrainAnalysisResult {
         // Save the request to conversation memory
+        memoryEngine.store(MemoryType.CONVERSATION, "User: \$userInput")
         memoryEngine.store(MemoryType.CONVERSATION, "User: " + userInput)
 
         val input = userInput.lowercase()
 
         // Simple Intent Recognition & Entity Extraction for demonstration
+        // "اقرأ ملف README" -> ACTION, READ_FILE
         if (input.contains("اقرأ") || input.contains("read")) {
             val path = extractPath(userInput)
             if (path.isEmpty()) {
@@ -63,6 +65,7 @@ class LocalBrain(private val memoryEngine: MemoryEngine) {
     }
 
     private fun extractPath(input: String): String {
+        // Very basic extraction: looking for words with dots or typical path structures
         val words = input.split(" ")
         for (word in words) {
             if (word.contains(".") || word.contains("/")) {
@@ -70,6 +73,7 @@ class LocalBrain(private val memoryEngine: MemoryEngine) {
             }
         }
 
+        // Fallback rule for simple demo "read config" -> "config"
         val parts = input.split(" ")
         val index = parts.indexOfFirst { it.lowercase() == "read" || it == "اقرأ" }
         if (index != -1 && index + 1 < parts.size) {
@@ -85,6 +89,9 @@ class LocalBrain(private val memoryEngine: MemoryEngine) {
 
     fun formulateResponse(result: com.adreesumer.qaya.execution.ExecutionResult): String {
         return if (result.isSuccess) {
+            "تمت العملية بنجاح. النتيجة: \${result.data}"
+        } else {
+            "فشلت العملية. السبب: \${result.errorMessage}"
             "تمت العملية بنجاح. النتيجة: " + result.data.toString()
         } else {
             "فشلت العملية. السبب: " + result.errorMessage.toString()

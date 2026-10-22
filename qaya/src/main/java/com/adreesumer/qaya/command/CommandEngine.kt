@@ -2,6 +2,13 @@ package com.adreesumer.qaya.command
 
 class CommandEngine {
 
+    companion object {
+        // Bolt: Extract regex compilation to companion object to prevent recompilation on every parseCommand call
+        private val WHITESPACE_REGEX = "\\s+".toRegex()
+    }
+
+    fun parseCommand(input: String): QayaCommand {
+        val parts = input.trim().split(WHITESPACE_REGEX)
     fun parseCommand(input: String): QayaCommand {
         val parts = input.trim().split("\\s+".toRegex())
         if (parts.isEmpty()) {

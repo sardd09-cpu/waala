@@ -31,6 +31,7 @@ class AuditLogger {
         logs.add(entry)
 
         // In the future: write to permanent storage (e.g., SQLite or File)
+        println("[AUDIT] [\${entry.eventType}] \${entry.details}")
         println("[AUDIT] [" + entry.eventType.toString() + "] " + entry.details)
     }
 
