@@ -9,6 +9,8 @@ class CommandEngine {
 
     fun parseCommand(input: String): QayaCommand {
         val parts = input.trim().split(WHITESPACE_REGEX)
+    fun parseCommand(input: String): QayaCommand {
+        val parts = input.trim().split("\\s+".toRegex())
         if (parts.isEmpty()) {
             return QayaCommand(type = CommandType.UNKNOWN)
         }

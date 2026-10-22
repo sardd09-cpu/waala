@@ -61,5 +61,8 @@ class CommandExecutionLoopTest {
         assertFalse(result.isSuccess)
         assertEquals(ExecutionStatus.FAILED, result.status)
         assertEquals(PlanStatus.FAILED, plan.status)
+        val command = commandEngine.parseCommand("read") // empty path
+
+        assertFalse("Command should be invalid due to missing path", commandEngine.validate(command))
     }
 }

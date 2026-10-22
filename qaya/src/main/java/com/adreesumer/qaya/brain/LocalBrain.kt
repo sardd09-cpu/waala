@@ -24,6 +24,7 @@ class LocalBrain(private val memoryEngine: MemoryEngine) {
     fun analyzeRequest(userInput: String): BrainAnalysisResult {
         // Save the request to conversation memory
         memoryEngine.store(MemoryType.CONVERSATION, "User: \$userInput")
+        memoryEngine.store(MemoryType.CONVERSATION, "User: " + userInput)
 
         val input = userInput.lowercase()
 
@@ -91,6 +92,9 @@ class LocalBrain(private val memoryEngine: MemoryEngine) {
             "تمت العملية بنجاح. النتيجة: \${result.data}"
         } else {
             "فشلت العملية. السبب: \${result.errorMessage}"
+            "تمت العملية بنجاح. النتيجة: " + result.data.toString()
+        } else {
+            "فشلت العملية. السبب: " + result.errorMessage.toString()
         }
     }
 }

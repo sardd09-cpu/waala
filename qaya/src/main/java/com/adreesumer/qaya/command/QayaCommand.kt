@@ -28,6 +28,7 @@ data class QayaCommand(
         // Basic validation based on type
         return when (type) {
             CommandType.READ_FILE -> parameters.containsKey("path")
+            CommandType.READ_FILE -> parameters.containsKey("path") && parameters["path"].toString().isNotEmpty()
             CommandType.WRITE_FILE -> parameters.containsKey("path") && parameters.containsKey("content")
             CommandType.DELETE_FILE -> parameters.containsKey("path")
             else -> true
